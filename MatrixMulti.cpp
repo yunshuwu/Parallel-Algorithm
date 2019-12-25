@@ -25,18 +25,13 @@ void MatrixMulti (int** A, int** B, int** Mul, int n) {
 int main(){
     int n;
     cin >> n;
-    int** A;
-    int** B;
-    int** Mul;
 
-    A = (int **)malloc(n * sizeof(int *));
-    for (int i=0;i < n;i++) A[i] = (int *)malloc(n * sizeof(int));
-
-    B = (int **)malloc(n * sizeof(int *));
-    for (int i=0;i < n;i++) B[i] = (int *)malloc(n * sizeof(int));
-
-    Mul = (int **)malloc(n * sizeof(int *));
-    for (int i=0;i < n;i++) Mul[i] = (int *)malloc(n * sizeof(int));
+    int** A = new int* [n]; // row
+    for (int i=0;i<n;i++) A[i] = new int[n];// col
+    int** B = new int* [n];
+    for (int i=0;i<n;i++) B[i] = new int[n];
+    int** Mul = new int* [n];
+    for (int i=0;i<n;i++) Mul[i] = new int[n];
 
     for (int i=0;i<n;i++)
         for (int j=0;j<n;j++) cin >> A[i][j];
@@ -53,8 +48,11 @@ int main(){
         cout << endl;
     }
     cout << "Time taken by function: " << t.get_total() << endl;
-    
-    free(A);
-    free(B);
-    free(Mul);
+
+    for (int i=0;i<n;i++) delete[] A[i];
+    delete[] A;
+    for (int i=0;i<n;i++) delete[] B[i];
+    delete[] B;
+    for (int i=0;i<n;i++) delete[] Mul[i];
+    delete[] Mul;
 }
