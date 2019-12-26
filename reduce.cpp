@@ -8,14 +8,14 @@
 using namespace std;
 using namespace std::chrono;
 
-int reduce(int* A, int n){
+long long int reduce(long long int* A, long long int n){
 	if(n == 1) return A[0];
-    if (n < 100) {
-        int sum = 0;
-        for (int i=0;i<n;i++) sum += A[i];
+    if (n < 10000) {
+        long long int sum = 0;
+        for (long long int i=0;i<n;i++) sum += A[i];
         return sum;
     }
-	int L, R;
+	long long int L, R;
 	L = cilk_spawn reduce(A, n/2);
 	R = reduce(A+n/2, n-n/2);
 	cilk_sync;
@@ -23,18 +23,18 @@ int reduce(int* A, int n){
 }
 
 int main(){
-	int n;
+	long long int n;
 	cin >> n;
-	int* A = new int[n];
+	long long int* A = new long long int[n];
 
-	cilk_for(int i=0; i < n;i++) A[i] = i+1;
+	cilk_for (long long int i=0; i < n;i++) A[i] = i+1;
 	
 	//cout << "This is array A" << endl;
 	//for(int i = 0;i<n;i++) cout << A[i] << endl;
 	
 	timer t;
 	t.start();
-	int sum = reduce(A, n);
+	long long int sum = reduce(A, n);
 	t.stop();
 
 	cout << "time taken by function: " << t.get_total() << endl;
